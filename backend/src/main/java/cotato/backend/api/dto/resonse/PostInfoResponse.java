@@ -6,14 +6,16 @@ public record PostInfoResponse(
         String title,
         String content,
         String writer,
-        Long views
+        Long views,
+        Long likes
 ) {
     public static PostInfoResponse from(Post post) {
         return new PostInfoResponse(
                 post.getTitle(),
                 post.getContent(),
                 post.getName(),
-                post.getViews()
+                post.getViews(),
+                post.getLikes()
         );
     }
 }
