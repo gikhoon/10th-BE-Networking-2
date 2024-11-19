@@ -2,9 +2,9 @@ package cotato.backend.domains.post.service;
 
 import static cotato.backend.common.exception.ErrorCode.*;
 
+import cotato.backend.domains.post.PostRepository;
 import cotato.backend.domains.post.entity.Post;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +21,8 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 public class PostService {
 
+	private final PostRepository postRepository;
+
 	// 로컬 파일 경로로부터 엑셀 파일을 읽어 Post 엔터티로 변환하고 저장
 	public void saveEstatesByExcel(String filePath) {
 		try {
@@ -33,8 +35,9 @@ public class PostService {
 
 					return new Post(title, content, name);
 				})
-				.collect(Collectors.toList());
+				.toList();
 
+			postRepository.saveAll(posts);
 		} catch (Exception e) {
 			log.error("Failed to save estates by excel", e);
 			throw ApiException.from(INTERNAL_SERVER_ERROR);
