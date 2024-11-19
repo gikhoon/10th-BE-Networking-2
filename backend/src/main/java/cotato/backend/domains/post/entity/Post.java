@@ -1,4 +1,4 @@
-package cotato.backend.domains.post;
+package cotato.backend.domains.post.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

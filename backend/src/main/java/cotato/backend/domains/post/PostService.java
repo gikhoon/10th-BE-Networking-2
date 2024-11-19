@@ -2,6 +2,7 @@ package cotato.backend.domains.post;
 
 import static cotato.backend.common.exception.ErrorCode.*;
 
+import cotato.backend.domains.post.entity.Post;
 import java.util.List;
 import java.util.stream.Collectors;
 
