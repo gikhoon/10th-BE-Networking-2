@@ -2,12 +2,15 @@ package cotato.backend.domains.post.service;
 
 import static cotato.backend.common.exception.ErrorCode.*;
 
+import cotato.backend.api.dto.resonse.PagedPostResponse;
 import cotato.backend.api.dto.resonse.PostInfoResponse;
 import cotato.backend.domains.post.PostRepository;
 import cotato.backend.domains.post.entity.Post;
-import jakarta.validation.constraints.NotNull;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +25,9 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 @Transactional(readOnly = true)
 public class PostService {
+    private final int PAGE_SIZE = 10;
+    public static final int PAGE_INDEX_OFFSET = 1;
+
     private final PostRepository postRepository;
     private final AsyncService asyncService;
 
@@ -57,5 +63,15 @@ public class PostService {
     @Transactional
     public void savePost(String title, String content, String name) {
         postRepository.save(new Post(title, content, name));
+    }
+
+    public PagedPostResponse findPostsByLikes(int page) {
+        Pageable pageable = PageRequest.of(page, PAGE_SIZE);
+        Page<Post> postPage = postRepository.findAllByOrderByLikesDesc(pageable);
+
+        return PagedPostResponse.from(postPage.getContent(),
+                postPage.getNumber() + PAGE_INDEX_OFFSET,
+                postPage.getTotalPages()
+        );
     }
 }

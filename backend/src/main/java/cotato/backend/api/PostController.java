@@ -1,6 +1,7 @@
 package cotato.backend.api;
 
 import cotato.backend.api.dto.request.SavePostRequest;
+import cotato.backend.api.dto.resonse.PagedPostResponse;
 import cotato.backend.api.dto.resonse.PostInfoResponse;
 import cotato.backend.domains.post.service.PostService;
 import jakarta.validation.Valid;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import cotato.backend.common.dto.DataResponse;
@@ -28,6 +30,14 @@ public class PostController {
         postService.saveEstatesByExcel(request.getPath());
 
         return ResponseEntity.ok(DataResponse.ok());
+    }
+
+    @GetMapping
+    public ResponseEntity<DataResponse<PagedPostResponse>> getPosts(
+            @RequestParam(defaultValue = "0") int page) {
+        PagedPostResponse response = postService.findPostsByLikes(page);
+
+        return ResponseEntity.ok(DataResponse.from(response));
     }
 
     @PostMapping
