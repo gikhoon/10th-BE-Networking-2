@@ -30,6 +30,9 @@ public class Post {
     @Column(name = "view", nullable = false)
     private Long views = 0L;
 
+    @Column(name = "likes", nullable = false)
+    private Long likes = 0L;
+
     public Post(String title, String content, String name) {
         this.title = title;
         this.content = content;
