@@ -1,5 +1,6 @@
-package cotato.backend.domains.post;
+package cotato.backend.api;
 
+import cotato.backend.domains.post.PostService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
