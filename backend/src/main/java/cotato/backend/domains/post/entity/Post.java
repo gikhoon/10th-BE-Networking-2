@@ -35,4 +35,8 @@ public class Post {
         this.content = content;
         this.name = name;
     }
+
+    public void increaseView() {
+        this.views++;
+    }
 }

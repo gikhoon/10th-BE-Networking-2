@@ -19,35 +19,37 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
-@Transactional
+@Transactional(readOnly = true)
 public class PostService {
+    private final PostRepository postRepository;
+    private final AsyncService asyncService;
 
-	private final PostRepository postRepository;
+    // 로컬 파일 경로로부터 엑셀 파일을 읽어 Post 엔터티로 변환하고 저장
+    @Transactional
+    public void saveEstatesByExcel(String filePath) {
+        try {
+            // 엑셀 파일을 읽어 데이터 프레임 형태로 변환
+            List<Post> posts = ExcelUtils.parseExcelFile(filePath).stream()
+                    .map(row -> {
+                        String title = row.get("title");
+                        String content = row.get("content");
+                        String name = row.get("name");
 
-	// 로컬 파일 경로로부터 엑셀 파일을 읽어 Post 엔터티로 변환하고 저장
-	public void saveEstatesByExcel(String filePath) {
-		try {
-			// 엑셀 파일을 읽어 데이터 프레임 형태로 변환
-			List<Post> posts = ExcelUtils.parseExcelFile(filePath).stream()
-				.map(row -> {
-					String title = row.get("title");
-					String content = row.get("content");
-					String name = row.get("name");
+                        return new Post(title, content, name);
+                    })
+                    .toList();
 
-					return new Post(title, content, name);
-				})
-				.toList();
+            postRepository.saveAll(posts);
+        } catch (Exception e) {
+            log.error("Failed to save estates by excel", e);
+            throw ApiException.from(INTERNAL_SERVER_ERROR);
+        }
+    }
 
-			postRepository.saveAll(posts);
-		} catch (Exception e) {
-			log.error("Failed to save estates by excel", e);
-			throw ApiException.from(INTERNAL_SERVER_ERROR);
-		}
-	}
-
-	public PostInfoResponse findPostById(long postId) {
-		Post post = postRepository.findById(postId)
-				.orElseThrow(() -> ApiException.from(POST_NOT_FOUND));
-		return PostInfoResponse.from(post);
-	}
+    public PostInfoResponse findPostById(long postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> ApiException.from(POST_NOT_FOUND));
+        asyncService.increaseViews(post);
+        return PostInfoResponse.from(post);
+    }
 }
