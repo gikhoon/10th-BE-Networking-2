@@ -2,6 +2,7 @@ package cotato.backend.domains.post.service;
 
 import static cotato.backend.common.exception.ErrorCode.*;
 
+import cotato.backend.api.dto.resonse.PostInfoResponse;
 import cotato.backend.domains.post.PostRepository;
 import cotato.backend.domains.post.entity.Post;
 import java.util.List;
@@ -42,5 +43,11 @@ public class PostService {
 			log.error("Failed to save estates by excel", e);
 			throw ApiException.from(INTERNAL_SERVER_ERROR);
 		}
+	}
+
+	public PostInfoResponse findPostById(long postId) {
+		Post post = postRepository.findById(postId)
+				.orElseThrow(() -> ApiException.from(POST_NOT_FOUND));
+		return PostInfoResponse.from(post);
 	}
 }
