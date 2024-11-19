@@ -74,4 +74,11 @@ public class PostService {
                 postPage.getTotalPages()
         );
     }
+
+    @Transactional
+    public void deletePostById(long postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> ApiException.from(POST_NOT_FOUND));
+        postRepository.delete(post);
+    }
 }

@@ -6,6 +6,7 @@ import cotato.backend.api.dto.resonse.PostInfoResponse;
 import cotato.backend.domains.post.service.PostService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,7 +23,6 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/posts")
 @RequiredArgsConstructor
 public class PostController {
-
     private final PostService postService;
 
     @PostMapping("/excel")
@@ -52,5 +52,12 @@ public class PostController {
         PostInfoResponse postInfo = postService.findPostById(postId);
 
         return ResponseEntity.ok(DataResponse.from(postInfo));
+    }
+
+    @DeleteMapping("/{post_id}")
+    public ResponseEntity<DataResponse<Void>> deletePost(@PathVariable(name = "post_id") long postId) {
+        postService.deletePostById(postId);
+
+        return ResponseEntity.ok(DataResponse.ok());
     }
 }
