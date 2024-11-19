@@ -5,6 +5,7 @@ import static cotato.backend.common.exception.ErrorCode.*;
 import cotato.backend.api.dto.resonse.PostInfoResponse;
 import cotato.backend.domains.post.PostRepository;
 import cotato.backend.domains.post.entity.Post;
+import jakarta.validation.constraints.NotNull;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -51,5 +52,10 @@ public class PostService {
                 .orElseThrow(() -> ApiException.from(POST_NOT_FOUND));
         asyncService.increaseViews(post);
         return PostInfoResponse.from(post);
+    }
+
+    @Transactional
+    public void savePost(String title, String content, String name) {
+        postRepository.save(new Post(title, content, name));
     }
 }

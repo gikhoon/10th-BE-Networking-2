@@ -1,7 +1,9 @@
 package cotato.backend.api;
 
+import cotato.backend.api.dto.request.SavePostRequest;
 import cotato.backend.api.dto.resonse.PostInfoResponse;
 import cotato.backend.domains.post.service.PostService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +26,13 @@ public class PostController {
     @PostMapping("/excel")
     public ResponseEntity<DataResponse<Void>> savePostsByExcel(@RequestBody SavePostsByExcelRequest request) {
         postService.saveEstatesByExcel(request.getPath());
+
+        return ResponseEntity.ok(DataResponse.ok());
+    }
+
+    @PostMapping
+    public ResponseEntity<DataResponse<Void>> savePost(@Valid @RequestBody SavePostRequest request) {
+        postService.savePost(request.getTitle(), request.getContent(), request.getName());
 
         return ResponseEntity.ok(DataResponse.ok());
     }
