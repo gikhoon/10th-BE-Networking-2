@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 @Transactional(readOnly = true)
 public class PostService {
-    private final int PAGE_SIZE = 10;
+    private static final int PAGE_SIZE = 10;
     public static final int PAGE_INDEX_OFFSET = 1;
 
     private final PostRepository postRepository;
