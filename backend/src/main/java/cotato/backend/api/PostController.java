@@ -23,6 +23,8 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/posts")
 @RequiredArgsConstructor
 public class PostController {
+    private static final String DEFAULT_PAGE_INDEX = "0";
+
     private final PostService postService;
 
     @PostMapping("/excel")
@@ -34,7 +36,7 @@ public class PostController {
 
     @GetMapping
     public ResponseEntity<DataResponse<PagedPostResponse>> getPosts(
-            @RequestParam(defaultValue = "0") int page) {
+            @RequestParam(defaultValue = DEFAULT_PAGE_INDEX) int page) {
         PagedPostResponse response = postService.findPostsByLikes(page);
 
         return ResponseEntity.ok(DataResponse.from(response));
