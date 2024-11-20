@@ -4,6 +4,8 @@ import cotato.backend.api.dto.request.SavePostRequest;
 import cotato.backend.api.dto.resonse.PagedPostResponse;
 import cotato.backend.api.dto.resonse.PostInfoResponse;
 import cotato.backend.domains.post.service.PostService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,6 +21,7 @@ import cotato.backend.common.dto.DataResponse;
 import cotato.backend.api.dto.request.SavePostsByExcelRequest;
 import lombok.RequiredArgsConstructor;
 
+@Tag(name = "게시물 관련 API", description = "게시물 관련 API 모음")
 @RestController
 @RequestMapping("/api/posts")
 @RequiredArgsConstructor
@@ -27,6 +30,7 @@ public class PostController {
 
     private final PostService postService;
 
+    @Operation(summary = "엑셀 파일을 이용한 다중 게시물 생성 API")
     @PostMapping("/excel")
     public ResponseEntity<DataResponse<Void>> savePostsByExcel(@RequestBody SavePostsByExcelRequest request) {
         postService.saveEstatesByExcel(request.getPath());
@@ -34,6 +38,7 @@ public class PostController {
         return ResponseEntity.ok(DataResponse.ok());
     }
 
+    @Operation(summary = "좋아요 순으로 페이징 게시 정보 반환 API")
     @GetMapping
     public ResponseEntity<DataResponse<PagedPostResponse>> getPosts(
             @RequestParam(defaultValue = DEFAULT_PAGE_INDEX) int page) {
@@ -42,6 +47,7 @@ public class PostController {
         return ResponseEntity.ok(DataResponse.from(response));
     }
 
+    @Operation(summary = "단건 게시물 생성 API")
     @PostMapping
     public ResponseEntity<DataResponse<Void>> savePost(@Valid @RequestBody SavePostRequest request) {
         postService.savePost(request.getTitle(), request.getContent(), request.getName());
@@ -49,6 +55,7 @@ public class PostController {
         return ResponseEntity.ok(DataResponse.ok());
     }
 
+    @Operation(summary = "단건 게시물 정보 반환 API")
     @GetMapping("/{post_id}")
     public ResponseEntity<DataResponse<PostInfoResponse>> findPostById(@PathVariable(name = "post_id") long postId) {
         PostInfoResponse postInfo = postService.findPostById(postId);
@@ -56,6 +63,7 @@ public class PostController {
         return ResponseEntity.ok(DataResponse.from(postInfo));
     }
 
+    @Operation(summary = "단건 게시물 삭제 API")
     @DeleteMapping("/{post_id}")
     public ResponseEntity<DataResponse<Void>> deletePost(@PathVariable(name = "post_id") long postId) {
         postService.deletePostById(postId);
