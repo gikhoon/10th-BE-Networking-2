@@ -4,7 +4,7 @@ import static cotato.backend.common.exception.ErrorCode.*;
 
 import cotato.backend.api.dto.resonse.PagedPostResponse;
 import cotato.backend.api.dto.resonse.PostInfoResponse;
-import cotato.backend.domains.post.PostRepository;
+import cotato.backend.domains.repository.PostRepository;
 import cotato.backend.domains.post.entity.Post;
 import java.util.List;
 

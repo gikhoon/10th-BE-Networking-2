@@ -1,6 +1,6 @@
 package cotato.backend.domains.post.service;
 
-import cotato.backend.domains.post.PostRepository;
+import cotato.backend.domains.repository.PostRepository;
 import cotato.backend.domains.post.entity.Post;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;

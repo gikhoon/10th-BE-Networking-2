@@ -1,4 +1,4 @@
-package cotato.backend.domains.post;
+package cotato.backend.domains.repository;
 
 import cotato.backend.domains.post.entity.Post;
 import org.springframework.data.domain.Page;
