@@ -19,5 +19,6 @@ public class AsyncService {
     @Async
     public void increaseViews(Post post) {
         post.increaseView();
+        postRepository.save(post);
     }
 }
