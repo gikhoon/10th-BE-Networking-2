@@ -55,6 +55,7 @@ public class PostService {
         }
     }
 
+    @Transactional
     public PostInfoResponse findPostById(long postId) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> ApiException.from(POST_NOT_FOUND));
