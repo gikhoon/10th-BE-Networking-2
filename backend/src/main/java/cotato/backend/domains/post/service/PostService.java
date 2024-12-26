@@ -72,7 +72,7 @@ public class PostService {
         Pageable pageable = PageRequest.of(page, PAGE_SIZE);
         Page<Post> postPage = postRepository.findAllByOrderByLikesDesc(pageable);
 
-        return PagedPostResponse.from(postPage.getContent(),
+        return PagedPostResponse.of(postPage.getContent(),
                 postPage.getNumber() + PAGE_INDEX_OFFSET,
                 postPage.getTotalPages()
         );

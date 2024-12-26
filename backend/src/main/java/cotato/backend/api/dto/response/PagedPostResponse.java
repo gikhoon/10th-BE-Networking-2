@@ -8,7 +8,7 @@ public record PagedPostResponse(
         Integer currentPage,
         Integer totalPage
 ) {
-    public static PagedPostResponse from(List<Post> posts, int currentPage, int totalPage) {
+    public static PagedPostResponse of(List<Post> posts, int currentPage, int totalPage) {
         List<PostInfoResponse> postInfos = posts.stream()
                 .map(PostInfoResponse::from)
                 .toList();
