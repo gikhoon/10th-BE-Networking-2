@@ -4,6 +4,7 @@ import static cotato.backend.common.exception.ErrorCode.*;
 
 import cotato.backend.api.dto.response.PagedPostResponse;
 import cotato.backend.api.dto.response.PostInfoResponse;
+import cotato.backend.domains.repository.PostJdbcRepository;
 import cotato.backend.domains.repository.PostRepository;
 import cotato.backend.domains.post.entity.Post;
 import java.util.List;
@@ -29,6 +30,7 @@ public class PostService {
     public static final int PAGE_INDEX_OFFSET = 1;
 
     private final PostRepository postRepository;
+    private final PostJdbcRepository postJdbcRepository;
     private final AsyncService asyncService;
 
     // 로컬 파일 경로로부터 엑셀 파일을 읽어 Post 엔터티로 변환하고 저장
@@ -46,7 +48,7 @@ public class PostService {
                     })
                     .toList();
 
-            postRepository.saveAll(posts);
+            postJdbcRepository.saveAllWithBatch(posts);
         } catch (Exception e) {
             log.error("Failed to save estates by excel", e);
             throw ApiException.from(INTERNAL_SERVER_ERROR);
