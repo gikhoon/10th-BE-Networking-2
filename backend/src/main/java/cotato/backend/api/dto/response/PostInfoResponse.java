@@ -1,4 +1,4 @@
-package cotato.backend.api.dto.resonse;
+package cotato.backend.api.dto.response;
 
 import cotato.backend.domains.post.entity.Post;
 

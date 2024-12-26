@@ -1,8 +1,8 @@
 package cotato.backend.api;
 
 import cotato.backend.api.dto.request.SavePostRequest;
-import cotato.backend.api.dto.resonse.PagedPostResponse;
-import cotato.backend.api.dto.resonse.PostInfoResponse;
+import cotato.backend.api.dto.response.PagedPostResponse;
+import cotato.backend.api.dto.response.PostInfoResponse;
 import cotato.backend.domains.post.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

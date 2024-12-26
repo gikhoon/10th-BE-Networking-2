@@ -2,8 +2,8 @@ package cotato.backend.domains.post.service;
 
 import static cotato.backend.common.exception.ErrorCode.*;
 
-import cotato.backend.api.dto.resonse.PagedPostResponse;
-import cotato.backend.api.dto.resonse.PostInfoResponse;
+import cotato.backend.api.dto.response.PagedPostResponse;
+import cotato.backend.api.dto.response.PostInfoResponse;
 import cotato.backend.domains.repository.PostRepository;
 import cotato.backend.domains.post.entity.Post;
 import java.util.List;
