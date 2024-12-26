@@ -33,7 +33,7 @@ public class PostController {
     @Operation(summary = "엑셀 파일을 이용한 다중 게시물 생성 API")
     @PostMapping("/excel")
     public ResponseEntity<DataResponse<Void>> savePostsByExcel(@Valid @RequestBody SavePostsByExcelRequest request) {
-        postService.saveEstatesByExcel(request.getPath());
+        postService.saveEstatesByExcel(request.path());
 
         return ResponseEntity.ok(DataResponse.ok());
     }
@@ -50,7 +50,7 @@ public class PostController {
     @Operation(summary = "단건 게시물 생성 API")
     @PostMapping
     public ResponseEntity<DataResponse<Void>> savePost(@Valid @RequestBody SavePostRequest request) {
-        postService.savePost(request.getTitle(), request.getContent(), request.getName());
+        postService.savePost(request.title(), request.content(), request.name());
 
         return ResponseEntity.ok(DataResponse.ok());
     }
